@@ -58,6 +58,7 @@ class MoviesController < ApplicationController
         hash = {}
         @all_ratings.each { |val| hash[val] = '1' }
         hash
+        hash
      end
 
 end
