@@ -52,4 +52,12 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+    private 
+
+     def all_ratings  
+        hash = {}
+        @all_ratings.each { |val| hash[val] = '1' }
+        hash
+     end
+
 end
