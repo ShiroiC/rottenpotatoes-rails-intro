@@ -22,6 +22,7 @@ class MoviesController < ApplicationController
       flash.keep
       redirect_to movies_path sort: @sort, ratings: @ratings
     end
+    @movies
   end
 
   def new
