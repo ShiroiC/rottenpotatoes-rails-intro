@@ -11,7 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @sort = params[:sort] || session[:sort] || 'name'
+    @sort = params[:sort] || session[:sort]
     @ratings = params[:ratings]  || session[:ratings] || ['G','PG','PG-13', 'NC-17', 'R']
     @movies = Movie.where( { rating: @ratings.keys } ).order(@sort)
     session[:sort], session[:ratings] = @sort, @ratings
