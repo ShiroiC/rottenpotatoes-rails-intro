@@ -11,15 +11,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @sort = params[:sort] || session[:sort]
-    @ratings = params[:ratings]  || session[:ratings] || ['G','PG','PG-13', 'NC-17', 'R']
-    @movies = Movie.where( { rating: @ratings.keys } ).order(@sort)
-    session[:sort], session[:ratings] = @sort, @ratings
+    sort = params[:sort] || session[:sort]
+    ratings = params[:ratings]  || session[:ratings] || ['G','PG','PG-13', 'NC-17', 'R']
+    movies = Movie.where( { rating: ratings.keys } ).order(sort)
+    session[:sort], session[:ratings] = sort, ratings
     if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
       flash.keep
-      redirect_to movies_path sort: @sort, ratings: @ratings
+      redirect_to movies_path sort: sort, ratings: ratings
     end
-    @movies
+    movies
   end
 
   def new
