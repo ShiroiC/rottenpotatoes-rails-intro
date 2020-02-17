@@ -11,12 +11,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sort = params[:sort] || session[:sort]
-    ratings = params[:ratings]  || session[:ratings] || ['G','PG','PG-13', 'NC-17', 'R']
-    movies = Movie.where( { rating: ratings.keys } ).order(sort)
-    session[:sort], session[:ratings] = sort, ratings
-
-    movies
+    @sort = params[:sort] || session[:sort] || 'title'
+    @ratings = params[:ratings]  || session[:ratings] || {'G'=>1,'PG'=>1,'PG-13'=>1, 'NC-17'=>1, 'R'=>1}
+    @movies = Movie.where( { rating: @ratings.keys } ).order(@sort)
+    session[:sort], session[:ratings] = @sort, @ratings
+    
+     if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      flash.keep
+      redirect_to movies_path sort: @sort, ratings: @ratings
+    end
   end
 
   def new
@@ -46,5 +49,6 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
+
 
 end
